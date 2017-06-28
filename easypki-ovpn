@@ -81,18 +81,18 @@ check_config_exists() {
 
 create_ca() {
 	msg "Generating" "Certificate authority"
-	easypki create --filename ca --ca "OpenVPN CA"
+	easypki create --expire ${expire:-3650} --filename ca --ca "OpenVPN CA"
 }
 
 create_server() {
 	msg "Generating" "Server certificate"
-	easypki create "$server_name"
+	easypki create --expire ${expire:-3650} "$server_name"
 }
 
 create_pki_user() {
 	command -v easypki >/dev/null 2>&1 || die "Could not find easypki."
 	msg "Creating" "PKI user $user"
-	easypki create --client --email $email $user
+	easypki create --expire ${expire:-3650} --client --email $email $user
 }
 
 init_pki() {
